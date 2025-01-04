@@ -1,0 +1,43 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String?
+  email     String?  @unique
+  password  String?
+  createdAt DateTime @default(now())
+}
+
+model Zap {
+  id        String   @id @default(uuid())
+  triggerId String
+  trigger   Trigger?
+  createdAt DateTime @default(now())
+}
+
+model Trigger {
+  id        String            @id @default(uuid())
+  createdAt DateTime          @default(now())
+  type      String
+  typeId    AvailableTriggers @relation(fields: [type], references: [id])
+  zapId     String          @unique
+  zap       Zap             @relation(fields: [zapId], references: [id])
+}
+
+model AvailableTriggers {
+  id        String    @id @default(uuid())
+  name      String
+  createdAt DateTime  @default(now())
+  triggers  Trigger[]
+}
