@@ -5,6 +5,9 @@ node_modules
 .pnp
 .pnp.js
 
+# Ignore dist directories in apps and packages
+**/dist/
+
 # testing
 coverage
 

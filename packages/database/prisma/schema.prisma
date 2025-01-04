@@ -2,7 +2,7 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 datasource db {
-  provider     = "mysql"
+  provider     = "postgresql"
   url          = env("DATABASE_URL")
   relationMode = "prisma"
 }
@@ -24,20 +24,57 @@ model Zap {
   triggerId String
   trigger   Trigger?
   createdAt DateTime @default(now())
+  actions   Action[]
+  runs      ZapRun[]
+  outbox    ZapRunOutbox[]
 }
 
 model Trigger {
   id        String            @id @default(uuid())
-  createdAt DateTime          @default(now())
   type      String
-  typeId    AvailableTriggers @relation(fields: [type], references: [id])
-  zapId     String          @unique
-  zap       Zap             @relation(fields: [zapId], references: [id])
+  typeId    AvailableTrigger @relation(fields: [type], references: [id])
+  zapId     String            @unique
+  zap       Zap               @relation(fields: [zapId], references: [id])
+  createdAt DateTime          @default(now())
 }
 
-model AvailableTriggers {
+model AvailableTrigger {
   id        String    @id @default(uuid())
   name      String
-  createdAt DateTime  @default(now())
   triggers  Trigger[]
+  createdAt DateTime  @default(now())
+}
+
+model Action {
+  id              String           @id @default(uuid())
+  type            String           @unique
+  availableAction AvailableAction @relation(fields: [type], references: [id])
+  zapId           String           @unique
+  zap             Zap              @relation(fields: [zapId], references: [id])
+  createdAt       DateTime         @default(now())
+}
+
+model AvailableAction {
+  id        String   @id @default(uuid())
+  name      String
+  actions   Action[]
+  createdAt DateTime @default(now())
+}
+
+model ZapRun {
+  id        String   @id @default(uuid())
+  zapId     String
+  metadata  Json
+  zap       Zap      @relation(fields: [zapId], references: [id])
+  outbox    ZapRunOutbox?
+  createdAt DateTime @default(now())
+}
+
+model ZapRunOutbox {
+  id        String   @id @default(uuid())
+  zapRunId  String   @unique
+  zapRun    ZapRun   @relation(fields: [zapRunId], references: [id])
+  zapId     String
+  zap       Zap      @relation(fields: [zapId], references: [id])
+  createdAt DateTime @default(now())
 }
