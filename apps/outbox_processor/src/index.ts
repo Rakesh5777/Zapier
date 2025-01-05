@@ -1,5 +1,8 @@
 import { prisma } from "@repo/database";
 import { Kafka } from "kafkajs";
+import { config } from "dotenv";
+
+config(); // load env
 
 const KAFKA_BROKER = process.env.KAFKA_BROKER!;
 const KAFKA_TOPIC = process.env.KAFKA_TOPIC!;

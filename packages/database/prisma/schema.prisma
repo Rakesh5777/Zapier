@@ -51,6 +51,7 @@ model Action {
   availableAction AvailableAction @relation(fields: [type], references: [id])
   zapId           String           @unique
   zap             Zap              @relation(fields: [zapId], references: [id])
+  sortingOrder    Int              @default(0)
   createdAt       DateTime         @default(now())
 }
 

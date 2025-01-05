@@ -1,5 +1,5 @@
 {
-  "name": "@repo/outbox_processor",
+  "name": "zap_worker",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -8,16 +8,14 @@
     "start": "node dist/index.js",
     "build": "tsc"
   },
+  "dependencies": {
+    "@repo/database": "*",
+    "@types/kafkajs": "^1.9.0",
+    "dotenv": "^16.4.7",
+    "kafkajs": "^2.2.4"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
-  "dependencies": {
-    "@repo/database": "*",
-    "@types/express": "^5.0.0",
-    "@types/kafkajs": "^1.9.0",
-    "dotenv": "^16.4.7",
-    "express": "^4.21.2",
-    "kafkajs": "^2.2.4"
-  }
+  "description": ""
 }
