@@ -98,7 +98,51 @@ To develop all apps and packages, run the following command:
 yarn run dev
 ```
 
+## symbolic link
+
+Using a symbolic link for the `.env` file centralizes configuration, ensuring all applications share the same environment variables. This simplifies management and reduces the risk of inconsistencies across your monorepo.
+
+```bash
+ ln -s /path/to/root/.env /path/to/apps/.env
+```
+
+## Kafka commands
+
+To start kafka docker container
+
+```bash
+docker run -p 9092:9092 -d apache/kafka:3.7.1
+```
+
+To connect to kafka docker container
+
+```bash
+docker exec -it kafka /bin/bash
+```
+
+To create a topic in kafka docker container
+
+```bash
+opt/kafka/bin/kafka-topics.sh --create --topic zap-events --bootstrap-server localhost:9092
+```
+
+To list all topics
+
+```bash
+opt/kafka/bin/kafka-topics.sh --list --bootstrap-server localhost:9092
+```
+
+To listen to a topic
+
+```bash
+opt/kafka/bin/kafka-console-consumer.sh --topic zap-events --from-beginning --bootstrap-server localhost:9092
+```
+
 ## Useful Links
+
+- [Kafka](https://kafka.apache.org/)
+- [KafkaJS](https://kafka.js.org/)
+- [KafkaJS Docker](https://github.com/obsidiandynamics/kafdrop)
 
 Learn more about the power of Turborepo:
 
