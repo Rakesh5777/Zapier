@@ -24,7 +24,7 @@ async function main() {
       const offset = message.offset;
       console.log({ partition, offset, value });
 
-      await new Promise((resolve) => setTimeout(resolve, 5000));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
 
       console.log("processing done");
 

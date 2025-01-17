@@ -47,9 +47,9 @@ model AvailableTrigger {
 
 model Action {
   id              String           @id @default(uuid())
-  type            String           @unique
+  type            String           
   availableAction AvailableAction @relation(fields: [type], references: [id])
-  zapId           String           @unique
+  zapId           String           
   zap             Zap              @relation(fields: [zapId], references: [id])
   sortingOrder    Int              @default(0)
   createdAt       DateTime         @default(now())

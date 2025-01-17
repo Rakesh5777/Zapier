@@ -2,6 +2,7 @@ import express from "express";
 import { prisma } from "@repo/database";
 
 const app = express();
+const PORT = process.env.HOOKS_PORT!;
 
 app.use(express.json());
 
@@ -30,6 +31,6 @@ app.post("/hooks/catch/:userId/:zapId", async (req, res) => {
   res.send("OK");
 });
 
-app.listen(3000, () => {
+app.listen(PORT, () => {
   console.log("Server is running on port 3000");
 });

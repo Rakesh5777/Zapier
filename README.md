@@ -106,6 +106,14 @@ Using a symbolic link for the `.env` file centralizes configuration, ensuring al
  ln -s /path/to/root/.env /path/to/apps/.env
 ```
 
+## Docker postgres commands 
+
+To start postgres docker container
+
+```bash
+docker run -p 5432:5432 -e POSTGRES_PASSWORD=mysecretpassword -d  -v /Users/rakesh/Desktop/rakesh/docker-storage/zapier:/var/lib/postgresql/data postgres
+```
+
 ## Kafka commands
 
 To start kafka docker container
