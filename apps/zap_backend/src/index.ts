@@ -1,8 +1,8 @@
-import express, { Request, Response, NextFunction } from "express";
+import express from "express";
 import { config } from "dotenv";
 import zapRouter from "./routes/zap.route";
-import { zapSchema } from "./types/zap.types";
-import { prisma } from "@repo/database";
+import userRouter from "./routes/user.route";
+import cookieParser from "cookie-parser";
 
 config();
 
@@ -10,8 +10,10 @@ const app = express();
 const PORT = process.env.ZAP_BACKEND_PORT!;
 
 app.use(express.json());
+app.use(cookieParser());
 
 app.use("/api/v1/zap", zapRouter);
+app.use("/api/v1/user", userRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

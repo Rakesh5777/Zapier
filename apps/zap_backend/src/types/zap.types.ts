@@ -10,4 +10,4 @@ export const zapSchema = z.object({
   ),
 });
 
-export type ZapSchema = z.infer<typeof zapSchema>;
+export type Zap = z.infer<typeof zapSchema>;

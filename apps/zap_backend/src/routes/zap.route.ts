@@ -1,32 +1,17 @@
 import express, { Request, Response } from "express";
 import { zapSchema } from "../types/zap.types";
 import { prisma } from "@repo/database";
+import { createZapController } from "../controllers/zap.controller";
+import { validateRequest } from "../middleware/validateRequest.middleware";
+import { authenticate } from "../middleware/auth.middleware";
 
 const zapRouter = express.Router();
 
-zapRouter.post("/", async (req: Request, res: Response) => {
-  const zap = zapSchema.parse(req.body);
-  if (!zap) {
-    return res.status(400).json({
-      message: "Invalid zap",
-    });
-  }
-
-  await prisma.zap.create({
-    data: {
-      triggerId: zap.triggerId,
-      actions: {
-        create: zap.actions.map((z) => ({
-          type: z.type,
-          sortingOrder: z.sortingOrder,
-        })),
-      },
-    },
-  });
-
-  return res.status(200).json({
-    message: "Zap created",
-  });
-});
+zapRouter.post(
+  "/",
+  validateRequest(zapSchema),
+  authenticate,
+  createZapController
+);
 
 export default zapRouter;
