@@ -17,6 +17,7 @@ model User {
   email     String?  @unique
   password  String?
   createdAt DateTime @default(now())
+  zapRuns   Zap[] // One-to-many relationship with ZapRun
 }
 
 model Zap {
@@ -24,6 +25,8 @@ model Zap {
   triggerId String
   trigger   Trigger?
   createdAt DateTime @default(now())
+  userId    Int   // Foreign key referencing the User model
+  User      User     @relation(fields: [userId], references: [id]) // Relation to User
   actions   Action[]
   runs      ZapRun[]
   outbox    ZapRunOutbox[]

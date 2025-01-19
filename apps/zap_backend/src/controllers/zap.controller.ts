@@ -3,7 +3,9 @@ import { createZap } from "../services/zap.service";
 
 export const createZapController = async (req: Request, res: Response) => {
   try {
-    await createZap(req.body);
+    //@ts-ignore
+    const userId = req.user.userId;
+    await createZap(userId, req.body);
     return res.status(200).json({ message: "Zap created successfully" });
   } catch (error) {
     console.error("Error creating zap:", error);

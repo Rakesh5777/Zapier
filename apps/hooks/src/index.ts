@@ -10,6 +10,14 @@ app.post("/hooks/catch/:userId/:zapId", async (req, res) => {
   const { userId, zapId } = req.params;
   const { body } = req;
 
+  const user = await prisma.user.findFirst({
+    where: { id: +userId },
+  });
+
+  if (!user) {
+    return res.status(500).json({ message: "user not found" });
+  }
+
   await prisma.$transaction(async (tx) => {
     // create zap run
     const run = await tx.zapRun.create({
