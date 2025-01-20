@@ -21,24 +21,25 @@ model User {
 }
 
 model Zap {
-  id        String   @id @default(uuid())
+  id        String         @id @default(uuid())
+  name      String
   triggerId String
   trigger   Trigger?
-  createdAt DateTime @default(now())
-  userId    Int   // Foreign key referencing the User model
-  User      User     @relation(fields: [userId], references: [id]) // Relation to User
+  createdAt DateTime       @default(now())
+  userId    Int // Foreign key referencing the User model
+  User      User           @relation(fields: [userId], references: [id]) // Relation to User
   actions   Action[]
   runs      ZapRun[]
   outbox    ZapRunOutbox[]
 }
 
 model Trigger {
-  id        String            @id @default(uuid())
-  type      String
-  typeId    AvailableTrigger @relation(fields: [type], references: [id])
-  zapId     String            @unique
-  zap       Zap               @relation(fields: [zapId], references: [id])
-  createdAt DateTime          @default(now())
+  id        String           @id @default(uuid())
+  typeId    String
+  type      AvailableTrigger @relation(fields: [typeId], references: [id])
+  zapId     String           @unique
+  zap       Zap              @relation(fields: [zapId], references: [id])
+  createdAt DateTime         @default(now())
 }
 
 model AvailableTrigger {
@@ -49,13 +50,13 @@ model AvailableTrigger {
 }
 
 model Action {
-  id              String           @id @default(uuid())
-  type            String           
+  id              String          @id @default(uuid())
+  type            String
   availableAction AvailableAction @relation(fields: [type], references: [id])
-  zapId           String           
-  zap             Zap              @relation(fields: [zapId], references: [id])
-  sortingOrder    Int              @default(0)
-  createdAt       DateTime         @default(now())
+  zapId           String
+  zap             Zap             @relation(fields: [zapId], references: [id])
+  sortingOrder    Int             @default(0)
+  createdAt       DateTime        @default(now())
 }
 
 model AvailableAction {
@@ -66,12 +67,12 @@ model AvailableAction {
 }
 
 model ZapRun {
-  id        String   @id @default(uuid())
+  id        String        @id @default(uuid())
   zapId     String
   metadata  Json
-  zap       Zap      @relation(fields: [zapId], references: [id])
+  zap       Zap           @relation(fields: [zapId], references: [id])
   outbox    ZapRunOutbox?
-  createdAt DateTime @default(now())
+  createdAt DateTime      @default(now())
 }
 
 model ZapRunOutbox {

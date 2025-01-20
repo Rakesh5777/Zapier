@@ -1,6 +1,9 @@
 import express, { Request, Response } from "express";
 import { zapSchema } from "../types/zap.types";
-import { createZapController } from "../controllers/zap.controller";
+import {
+  createZapController,
+  getZapController,
+} from "../controllers/zap.controller";
 import { validateRequest } from "../middleware/validateRequest.middleware";
 import { authenticate } from "../middleware/auth.middleware";
 
@@ -12,5 +15,7 @@ zapRouter.post(
   authenticate,
   createZapController
 );
+
+zapRouter.get("/", authenticate, getZapController);
 
 export default zapRouter;
